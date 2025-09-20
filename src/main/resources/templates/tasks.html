@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+
+    <div sec:authorize="isAuthenticated()">
+        Привет, <span sec:authentication="name"></span>
+    </div>
+
+    <h2 class="mb-4">Tasks</h2>
+
+    <a th:href="@{/tasks/new}" class="btn btn-success mb-3">+ Create Task</a>
+
+    <table class="table table-bordered">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.id}"></td>
+            <td th:text="${task.title}"></td>
+            <td th:text="${task.status}"></td>
+            <td th:text="${#temporals.format(task.createdAt, 'dd.MM.yyyy HH:mm')}"></td>
+            <td>
+                <a th:href="@{'/tasks/edit/' + ${task.id}}" class="btn btn-warning btn-sm">Edit</a>
+                <form th:action="@{'/tasks/delete/' + ${task.id}}" method="post" style="display:inline">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(tasks)}">
+            <td colspan="5" class="text-center">Задач пока нет. <a th:href="@{/tasks/new}">Создать первую задачу</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

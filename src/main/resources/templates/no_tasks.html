@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Нет задач</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <div class="alert alert-info" role="alert">
+        <p th:text="${message}"></p>
+        <a th:href="@{/tasks/new}" class="btn btn-primary">Создать новую задачу</a>
+    </div>
+</div>
+</body>
+</html>
